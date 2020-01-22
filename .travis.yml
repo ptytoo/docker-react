@@ -1,0 +1,19 @@
+# language: generic
+
+sudo: required
+
+# Tell Travis we need a copy of docker running
+services:
+  - docker
+
+# Build out image using Dockerfile.dev
+before_install:
+  - docker build -t ptytoo/docker-react -f Dockerfile.dev .
+
+# Tell Travis how to run our test suit
+script:
+  - docker run -e CI=true ptytoo/docker-react npm run test
+# origin code : 
+# docker run ptytoo/docker-react npm run test -- --coverage
+
+# Tell Travis how to deploy our code to AWS
