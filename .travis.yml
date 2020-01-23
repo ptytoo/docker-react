@@ -12,9 +12,17 @@ before_install:
 
 # Tell Travis how to run our test suit
 script:
-  - docker run ptytoo/docker-react npm run test -- --coverage
-  # - docker run -e CI=true ptytoo/docker-react npm run test
+  # - docker run ptytoo/docker-react npm run test -- --coverage
+  - docker run -e CI=true ptytoo/docker-react npm run test
 # origin code : 
-
-
 # Tell Travis how to deploy our code to AWS
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-859681118208"
+  bucket_path: "docker-react"
+  on:
+    branch: master
